@@ -26,10 +26,9 @@ An example of a maze is given in Figure 1.
 
  *Implement code to find a path from the starting position to the exit position using 
 
-    *Breath-First Search
-    *Depth-First Search
-    *Alternate (A*) Search. For the A* 
-Search, you must define an appropriate heuristic function, and justify your choice. 
+*Breath-First Search
+*Depth-First Search
+*Alternate (A*) Search. For the Alternate Search, you must define an appropriate heuristic function, and justify your choice. 
 Your implementation should output information about the search, including the
 complete path, its cost, and the number of nodes explored (or squares checked) 
 before finding it.
@@ -45,9 +44,9 @@ for the A* Search, explain and justify your chosen heuristic function.
 2. Sample output of each search method you implemented on the maze of Figure 1.
 3. You will have to test each search technique three times:
 
-  3.1 With the agent starting at S and ending at E1
-  3.2 With the agent starting at S and ending at E2
-  3.3 With the agent starting at (0,0) and ending (24,24)
+  3.1   With the agent starting at S and ending at E1
+  3.2   With the agent starting at S and ending at E2
+  3.3   With the agent starting at (0,0) and ending (24,24)
 
-Figure 1
+###Figure 1
 ![Figure 1](http://dl.dropbox.com/u/32773572/ece457a-A1Q1.png)
