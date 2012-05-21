@@ -3,7 +3,7 @@
 
 A collection of algorithms written in JS
 
-##Snake
+##`Snake`
 
 Given a 2D maze, `snake` solves the maze for a given `start` and `end` point in the maze.
 
@@ -69,6 +69,8 @@ Find a path from `start` to `end`, using a depth-first search.
 ### .alternate(options)
 
 Find a path from `start` to `end`, using an alternate search heuristic.
+
+###options
 
 `options` is an object with the following keys:
 
