@@ -1,10 +1,5 @@
 module.exports = Snake
 
-//
-//  var start = [2,11], end = [23,19]
-//
-//  usage: new Snake().breadthFirst({ maze: maze, start: start, end: end })
-//
 function Snake () {}
 
 //get possible moves from @point
@@ -37,7 +32,7 @@ Snake.prototype.breadthFirst = function (opts) {
   var start = opts.start, end = opts.end
 
   var visited = []
-    , numVisited = 0
+    , numVisited = 1
 
   //mark start as visited
   visited[start[0]] = [start[1]]
@@ -58,14 +53,11 @@ Snake.prototype.breadthFirst = function (opts) {
 
     //are we done?
     if(curr[0] === end[0] && curr[1] === end[1]) {
-      console.log('\nfound exit')
-      console.log('\n# visited nodes:', numVisited)
-
       var parent = routes[curr.toString()]
         , cost = 1
         , out = []
 
-      //reconstruct the path
+      //reconstruct the shortest path going backwards
       while(parent) {
         out.push(parent.split(','))
         cost++
@@ -73,11 +65,13 @@ Snake.prototype.breadthFirst = function (opts) {
       }
       out.reverse().push(curr)
 
-      console.log('\ntotal time taken: %s ms', Date.now() - t1)
-      console.log('\ncost of path:%s\n', cost)
+      var elapsed = Date.now() - t1
+        , msg = 'found exit'
+      this.stdout(msg, numVisited, elapsed, cost)
       return out
     }
 
+    //not done, visit child nodes
     var children = this.getChildren(curr)
 
     //add un-visited children to queue
@@ -95,9 +89,25 @@ Snake.prototype.breadthFirst = function (opts) {
       }
     })
   }
-  console.log('maze is impossible to solve for start and end positions specified')
-  console.log('# visited nodes:', numVisited)
+
+  var elapsed = Date.now() - t1
+    , msg = 'maze is impossible to solve for start and end positions specified'
+  this.stdout(msg, numVisited, elapsed)
   return []
+}
+
+Snake.prototype.depthFirst = function (opts) {
+  var t1 = Date.now()
+  this.checkOpts(opts)
+  var start = opts.start, end = opts.end
+
+  
+}
+
+Snake.prototype.stdout = function (msg, numVisited, elapsed, cost) {
+  console.log('\n' + msg)
+  console.log('\n# visited nodes:', numVisited)
+  console.log('\ntotal time taken: %s ms\n', elapsed)
 }
 
 Snake.prototype.checkOpts = function (opts) {
