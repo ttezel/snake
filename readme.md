@@ -5,11 +5,11 @@ A collection of algorithms written in JS
 
 ##Snake
 
-Given a 2D maze, `snake` solves the maze for a given `start` and `end` point.
+Given a 2D maze, `snake` solves the maze for a given `start` and `end` point in the maze.
 
-Each position in the maze can be either empty or blocked.
+Each position in the maze can be either empty or blocked (marked by a 0 or 1 respectively).
 
-The snake can only move up, down, left or right, but not diagonally. It cannot enter
+`snake` can only move up, down, left or right, but not diagonally. It cannot enter
 blocked positions or move outside the maze.
 
 ##Usage
@@ -73,5 +73,5 @@ Find a path from `start` to `end`, using an alternate search heuristic.
 `options` is an object with the following keys:
 
 * `maze`     a 2D array where each index is a 0 (empty) or 1 (occupied by an obstacle)
-* `start`    (x,y) coordinates 
-* `end`      (x,y) coordinates 
+* `start`    [x,y] coordinates - [0,0] is bottom left point
+* `end`      [x,y] coordinates
