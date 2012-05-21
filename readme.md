@@ -3,8 +3,6 @@
 
 A collection of algorithms written in JS
 
-#Set 1
-
 ##Snake
 
 Given a 2D maze, `snake` solves the maze for a given `start` and `end` point.
@@ -14,7 +12,49 @@ Each position in the maze can be either empty or blocked.
 The snake can only move up, down, left or right, but not diagonally. It cannot enter
 blocked positions or move outside the maze.
 
-An example of a maze is given in Figure 1.
+##Usage
+
+```javascript
+var Snake = require('./snake')
+
+var maze = [
+  [0,0,0,0,1,1,0,0,0,0,0,0.0,0,0,0,0,1,1,0,0,0,0,0,0]
+, [1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+, [1,1,1,1,1,0,0,0,1,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0]
+, [0,0,0,1,1,1,0,0,1,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0]
+, [0,0,0,1,1,1,0,0,1,1,1,0,0,0,1,1,1,1,1,1,1,0,0,0,0]
+, [0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+, [0,0,0,0,0,0,0,0,1,1,1,0,0,0,1,1,1,1,1,1,1,0,0,0,0]
+, [1,1,1,1,1,1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+, [0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1]
+, [0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1]
+, [0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,1,1,0,0,0,0,0,1,1,1]
+, [0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,0,0,0,0,1,1,1,1]
+, [0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,0,1,0,0,1,0,0,1]
+, [0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,1,0,0,0]
+, [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,1,0,0,0]
+, [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0]
+, [0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0]
+, [0,0,1,1,1,0,1,1,0,0,1,1,1,0,0,0,0,0,1,0,0,0,0,0,0]
+, [0,0,1,0,0,0,1,1,0,0,1,1,1,0,0,0,0,0,1,1,1,1,1,1,0]
+, [1,1,1,0,0,0,1,1,0,0,1,1,1,0,0,0,0,0,1,1,1,1,0,0,0]
+, [1,1,1,0,0,0,1,1,0,0,1,1,1,0,0,0,0,0,1,1,0,0,0,0,0]
+, [0,0,0,0,0,0,1,1,0,0,1,1,1,0,0,0,0,0,1,1,0,0,0,0,0]
+, [0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,1,1,0,0,0,0,0]
+, [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0]
+, [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+]
+
+var snake = new Snake()
+
+var route = snake.breadthFirst({
+  maze: maze
+, start: [2,11]
+, end: [23,19]
+})
+
+console.log('path:', route)
+```
 
 ##`Snake` API
 
@@ -32,11 +72,6 @@ Find a path from `start` to `end`, using an alternate search heuristic.
 
 `options` is an object with the following keys:
 
-*`maze`
-*`start`
-*`end`
-
-Each of the three API functions return a path for the from `start` to `finish`, implemented using the
-
-###Figure 1
-![Figure 1](http://dl.dropbox.com/u/32773572/ece457a-A1Q1.png)
+*`maze`     a 2D array where each index is a 0 (empty) or 1 (occupied by an obstacle)
+*`start`    (x,y) coordinates 
+*`end`      (x,y) coordinates 
