@@ -5,10 +5,10 @@
 
 Given a 2D maze, `snake` solves the maze for a given `start` and `end` point in the maze.
 
-Each position in the maze can be either empty or blocked (marked by a 0 or 1 respectively).
+Each position in the maze can be either empty or blocked (marked by a `0` or `1` respectively).
 
 `snake` can only move up, down, left or right, but not diagonally. It cannot enter
-blocked positions or move outside the maze.
+blocked positions.
 
 ##Usage
 
