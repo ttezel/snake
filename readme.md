@@ -1,5 +1,5 @@
 
-#A collection of AI algorithms written in JS
+#A collection of AI algorithms
 
 ##`Snake`
 
@@ -72,6 +72,6 @@ Find a path from `start` to `end`, using an alternate search heuristic.
 
 `options` is an object with the following keys:
 
-* `maze`     a 2D array in which index is a `0` (empty) or `1` (occupied by an obstacle)
-* `start`    [x,y] coordinates - [0,0] is bottom left point
-* `end`      [x,y] coordinates
+* `maze`:     a 2D Array in which each value is `0` or `1`
+* `start`:    [x,y] coordinates - [0,0] is bottom left point
+* `end`:      [x,y] coordinates
