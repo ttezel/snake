@@ -3,50 +3,40 @@
 
 A collection of algorithms written in JS
 
-#Assignment 1
+#Set 1
 
-##Question 1
+##Snake
 
-Assume a 25 ×"25 two-dimensional maze. Each square in the maze has an (x,y)
-coordinate, with the bottom-left corner being (0,0) and the top-right corner being (24,24).
+Given a 2D maze, `snake` solves the maze for a given `start` and `end` point.
 
-Each position in the maze can be either empty or blocked. In addition, there are two
-“special” positions, the starting position and the exit position, both of which are selected
-randomly.
+Each position in the maze can be either empty or blocked.
 
-The agent can only move up, down, left or right, but never diagonally. It also cannot enter
-blocked positions or move outside the maze. Its objective is to find a path from its
-starting position to the exit position, preferably the cheapest one. The cost of a path is the
-number of positions the agent has to move through, including the starting and exit
-position.
+The snake can only move up, down, left or right, but not diagonally. It cannot enter
+blocked positions or move outside the maze.
 
 An example of a maze is given in Figure 1.
 
-### Requirements
+##`Snake` API
 
- *Implement code to find a path from the starting position to the exit position using 
+### .breadthFirst(options)
 
-*Breath-First Search
-*Depth-First Search
-*Alternate (A*) Search. For the Alternate Search, you must define an appropriate heuristic function, and justify your choice. 
-Your implementation should output information about the search, including the
-complete path, its cost, and the number of nodes explored (or squares checked) 
-before finding it.
+Find a path from `start` to `end`, using a breadth-first search.
 
-The above three search heuristics represent the minimum requirements for this question.
+### .depthFirst(options)
 
-###Deliverables
-You are expected to turn in a short paper (the shorter the better) which should include the 
-following:
+Find a path from `start` to `end`, using a depth-first search.
 
-1. A short description of your implementations of the search methods. In particular,
-for the A* Search, explain and justify your chosen heuristic function.
-2. Sample output of each search method you implemented on the maze of Figure 1.
-3. You will have to test each search technique three times:
+### .alternate(options)
 
-  3.1   With the agent starting at S and ending at E1
-  3.2   With the agent starting at S and ending at E2
-  3.3   With the agent starting at (0,0) and ending (24,24)
+Find a path from `start` to `end`, using an alternate search heuristic.
+
+`options` is an object with the following keys:
+
+*`maze`
+*`start`
+*`end`
+
+Each of the three API functions return a path for the from `start` to `finish`, implemented using the
 
 ###Figure 1
 ![Figure 1](http://dl.dropbox.com/u/32773572/ece457a-A1Q1.png)
