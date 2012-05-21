@@ -1,7 +1,7 @@
 
 #Cooperative and Adaptive Algorithms
 
-A collection of algorithms written in JS
+#A collection of AI algorithms written in JS
 
 ##`Snake`
 
