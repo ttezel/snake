@@ -72,6 +72,6 @@ Find a path from `start` to `end`, using an alternate search heuristic.
 
 `options` is an object with the following keys:
 
-*`maze`     a 2D array where each index is a 0 (empty) or 1 (occupied by an obstacle)
-*`start`    (x,y) coordinates 
-*`end`      (x,y) coordinates 
+* `maze`     a 2D array where each index is a 0 (empty) or 1 (occupied by an obstacle)
+* `start`    (x,y) coordinates 
+* `end`      (x,y) coordinates 
