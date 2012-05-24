@@ -19,9 +19,13 @@ Snake.prototype.getChildren = function (point) {
   })
 }
 
+//human readable @point [x,y] is looked up as [maxY-y][x]
 Snake.prototype.isEmpty = function (point) {
-  var x = point[0], y = point[1]
-  if (this.opts.maze[y] && this.opts.maze[y][x] === 0) 
+  var x = point[0]
+    , y = point[1]
+    , maxY = this._maxY
+
+  if (y > -1 && this.opts.maze[maxY-y] && this.opts.maze[maxY-y][x] === 0) 
     return true
   return false
 }
@@ -79,7 +83,7 @@ Snake.prototype.breadthFirst = function (opts) {
 
     //not done, visit child nodes
     var children = this.getChildren(curr)
-
+    
     children.forEach(function (child) {
       var x = child[0], y = child[1]
 
@@ -182,9 +186,9 @@ Snake.prototype.checkOpts = function (opts) {
     throw new Error('must specify maze')
   if (!Array.isArray(maze) || !Array.isArray(maze[0]))
     throw new Error('maze must be array of arrays')
-  //normalize maze
-  opts.maze = opts.maze.reverse()
+  //cache height for faster lookup
+  this._maxY = opts.maze.length-1
   this.opts = opts
-  if(!this.isEmpty(start) || !this.isEmpty(end))
-    throw new Error('must specify valid start and end positions')
+  if (!this.isEmpty(start)) throw new Error('must specify valid start position. Got: ' + start)
+  if (!this.isEmpty(end)) throw new Error('must specify valid end position. Got: ' + end)
 }
