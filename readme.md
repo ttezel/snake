@@ -109,7 +109,7 @@ Each of the 3 API methods return an object that looks like this:
      [ '3', '19' ],
      [ '2', '19' ],
      [ '2', '20' ],
-     [ 2, 21 ] ],
+     [ '2', '21' ] ],
   cost: 21 }        //  the cost for the discovered route (assumes all movements have cost = `1`)
 ```
 

@@ -59,7 +59,7 @@ Snake.prototype.breadthFirst = function (opts) {
     if (curr[0] === end[0] && curr[1] === end[1]) {
       var parent = routes[curr.toString()]
         , cost = 1
-        , route = [curr]
+        , route = [curr.toString().split(',')]
 
       //reconstruct the shortest path going backwards
       while (parent) {
@@ -83,7 +83,7 @@ Snake.prototype.breadthFirst = function (opts) {
 
     //not done, visit child nodes
     var children = this.getChildren(curr)
-    
+
     children.forEach(function (child) {
       var x = child[0], y = child[1]
 
