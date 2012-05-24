@@ -41,13 +41,14 @@ var cases = [
 ]
 
 cases.forEach(function (test, index) {
-  var result = snake[test.method](test.opts)
+  var opts = test.opts
+  var result = snake[test.method](opts)
   assert.strictEqual(result.msg, 'found exit', 'expected message to be `found exit`')
   assert.strictEqual(result.status, 1, 'expected status too be 1')
   assert(Array.isArray(result.route), 'expected route to be array')
   console.log(
-    '\nTest #%s: `%s`. start: [%s]. end [%s]. elapsed: %s ms. route:\n\n%s\n'
-  , index+1, test.method, test.opts.start, test.opts.end, result.elapsed, result.route.join(' -> ')
+    '\nTest#%s: `%s`. start: [%s] end [%s]. elapsed: %s ms. route (cost %s):\n\n%s\n'
+  , index+1, test.method, opts.start, opts.end, result.elapsed, result.cost, result.route.join(' -> ')
   )
 })
 console.log('\n\nALL TESTS PASS :)\n-------------------')
