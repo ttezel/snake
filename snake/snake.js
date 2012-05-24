@@ -50,7 +50,6 @@ Snake.prototype.breadthFirst = function (opts) {
   //traverse
   while (queue.length) {
     var curr = queue.shift()
-    console.log('.')
 
     //are we done?
     if (curr[0] === end[0] && curr[1] === end[1]) {
@@ -70,6 +69,7 @@ Snake.prototype.breadthFirst = function (opts) {
 
       return {
         msg: 'found exit'
+      , status: 1
       , elapsed: elapsed
       , numVisited: numVisited
       , route: route
@@ -99,6 +99,7 @@ Snake.prototype.breadthFirst = function (opts) {
 
   return {
     msg: 'maze is impossible to solve for start and end positions specified'
+  , status: 0
   , elapsed: elapsed
   , numVisited: numVisited
   , route: []
@@ -125,7 +126,6 @@ Snake.prototype.depthFirst = function (opts) {
   //traverse
   while (stack.length) {
     var top = stack[stack.length-1]
-    console.log('.')
   
     //are we done?
     if (top[0] === end[0] && top[1] === end[1]) {
@@ -134,6 +134,7 @@ Snake.prototype.depthFirst = function (opts) {
 
       return {
         msg: 'found exit'
+      , status: 1
       , elapsed: elapsed
       , numVisited: numVisited
       , cost: stack.length
@@ -158,7 +159,7 @@ Snake.prototype.depthFirst = function (opts) {
       numVisited++
       return true
     })
-    
+
     //nowhere to go from this node, so pop it of the stack
     if (!hasChildren) stack.pop()
   }
@@ -167,6 +168,7 @@ Snake.prototype.depthFirst = function (opts) {
 
   return {
     msg: 'maze is impossible to solve for start and end positions specified'
+  , status: 0
   , elapsed: elapsed
   , numVisited: numVisited
   , route: []
