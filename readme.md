@@ -66,6 +66,9 @@ Find a path from `start` to `end`, using a depth-first search. Returns an object
 
 Find a path from `start` to `end`, using an alternate search heuristic. Returns an object.
 
+The alternate search uses a distance estimate to determine where to search next. Consider a straight line **L** drawn on the maze, connecting `start` and `end`. At any given time in the search, `snake` will next choose to explore an adjacent point with the lowest cartesian distance away from **L**.
+
+
 ###options
 
 `options` is an object with the following keys:
