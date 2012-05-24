@@ -54,7 +54,7 @@ Snake.prototype.breadthFirst = function (opts) {
     if (curr[0] === end[0] && curr[1] === end[1]) {
       var parent = routes[curr.toString()]
         , cost = 1
-        , out = []
+        , out = [curr]
 
       //reconstruct the shortest path going backwards
       while (parent) {
@@ -62,7 +62,7 @@ Snake.prototype.breadthFirst = function (opts) {
         cost++
         parent = routes[parent]
       }
-      out.reverse().push(curr)
+      out.reverse()
 
       var elapsed = Date.now() - t1
         , msg = 'found exit'
@@ -76,16 +76,16 @@ Snake.prototype.breadthFirst = function (opts) {
     //add un-visited children to queue
     children.forEach(function (child) {
       var x = child[0], y = child[1]
-      if (!visited[x] || visited[x].indexOf(y) === -1) {
-        //mark child as visited
-        if (!visited[x]) visited[x] = [y]
-        else visited[x].push(y)
-        //update routes
-        routes[child.toString()] = curr.toString()
-        //add node to queue
-        queue.push(child)
-        numVisited++
-      }
+
+      if (!visited[x]) visited[x] = [y]
+      else if (visited[x].indexOf(y) === -1) visited[x].push(y)
+      else return false
+
+      //update routes
+      routes[child.toString()] = curr.toString()
+      //add node to queue
+      queue.push(child)
+      numVisited++
     })
   }
 
@@ -132,9 +132,9 @@ Snake.prototype.depthFirst = function (opts) {
     var children = this.getChildren(top)
 
     //find the first unvisited child
-    var found = children.some(function (child) {
+    var hasChildren = children.some(function (child) {
       var x = child[0], y = child[1]
-      //mark child as visited
+      //if not visited, mark as visited
       if (!visited[x]) visited[x] = [y]
       else if (visited[x].indexOf(y) === -1) visited[x].push(y)
       else return false
@@ -145,7 +145,7 @@ Snake.prototype.depthFirst = function (opts) {
       return true
     })
     //nowhere to go from this node, so pop it of the stack
-    if (!found) stack.pop()
+    if (!hasChildren) stack.pop()
   }
 
   var elapsed = Date.now() - t1
@@ -162,7 +162,7 @@ Snake.prototype.stdout = function (msg, numVisited, elapsed, cost) {
 }
 
 Snake.prototype.checkOpts = function (opts) {
-  var maze = opts.maze, start = opts.start,end = opts.end
+  var maze = opts.maze, start = opts.start, end = opts.end
   if (!maze)
     throw new Error('must specify maze')
   if (!Array.isArray(maze) || !Array.isArray(maze[0]))
