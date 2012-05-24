@@ -56,15 +56,15 @@ console.log('path:', route)
 
 ##`Snake` API
 
-### .breadthFirst(`options`)
+### .breadthFirst( `options` )
 
 Find a path from `start` to `end`, using a breadth-first search.
 
-### .depthFirst(`options`)
+### .depthFirst( `options` )
 
 Find a path from `start` to `end`, using a depth-first search.
 
-### .alternate(`options`)
+### .alternate( `options` )
 
 Find a path from `start` to `end`, using an alternate search heuristic.
 
