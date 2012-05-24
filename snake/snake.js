@@ -46,19 +46,18 @@ Snake.prototype.breadthFirst = function (opts) {
   routes[start.toString()] = null
 
   //traverse
-  while(queue.length) {
+  while (queue.length) {
     var curr = queue.shift()
-
     console.log('.')
 
     //are we done?
-    if(curr[0] === end[0] && curr[1] === end[1]) {
+    if (curr[0] === end[0] && curr[1] === end[1]) {
       var parent = routes[curr.toString()]
         , cost = 1
         , out = []
 
       //reconstruct the shortest path going backwards
-      while(parent) {
+      while (parent) {
         out.push(parent.split(','))
         cost++
         parent = routes[parent]
@@ -99,9 +98,79 @@ Snake.prototype.breadthFirst = function (opts) {
 Snake.prototype.depthFirst = function (opts) {
   var t1 = Date.now()
   this.checkOpts(opts)
-  var start = opts.start, end = opts.end
 
+  var start = opts.start
+    , end = opts.end
+
+  var visited = []
+    , numVisited = 0
+
+  //mark start as visited
+  visited[start[0]] = [start[1]]
+
+  //store node:parent relationships to reconstruct the path
+  var routes = {}
+
+  routes[start.toString()] = null
+
+  //nodes that have yet to be fully explored
+  var stack = [start]
+
+  //traverse
+  while (stack.length) {
+    var top = stack[stack.length-1]
+
+    console.log('.')
   
+    //are we done?
+    if (top[0] === end[0] && top[1] === end[1]) {
+      var parent = routes[top.toString()]
+        , cost = 1
+        , out = [top]
+
+      //reconstruct the shortest path going backwards
+      while (parent) {
+        out.push(parent.split(','))
+        cost++
+        parent = routes[parent]
+      }
+      out.reverse()
+
+      var elapsed = Date.now() - t1
+        , msg = 'found exit'
+      this.stdout(msg, numVisited, elapsed, cost)
+      return out 
+    }
+
+    //not done, push first unvisited child onto stack
+
+    var children = this.getChildren(top)
+
+    //find the first unvisited child
+    var found = children.some(function (child) {
+      var x = child[0], y = child[1]
+      //add unvisited children to stack
+      if(!visited[x] || visited[x].indexOf(y) === -1) {
+        //mark child as visited
+        if (!visited[x]) visited[x] = [y]
+        else visited[x].push(y)
+        //update routes
+        routes[child.toString()] = top.toString()
+        //push child onto stack
+        stack.push(child)
+        numVisited++
+        return true
+      }
+    })
+
+    //nowhere to go from this node, so pop it of the stack
+    if (!found) stack.pop()
+  }
+
+
+  return []
+
+
 }
 
 Snake.prototype.stdout = function (msg, numVisited, elapsed, cost) {
