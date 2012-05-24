@@ -1,6 +1,4 @@
 
-#A collection of AI algorithms
-
 ##`Snake`
 
 Given a 2D maze, `snake` solves the maze for a given `start` and `end` point in the maze.
