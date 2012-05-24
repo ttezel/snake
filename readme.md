@@ -43,28 +43,28 @@ var maze = [
 
 var snake = new Snake()
 
-var route = snake.breadthFirst({
+var result = snake.breadthFirst({
   maze: maze
 , start: [2,11]
 , end: [23,19]
 })
 
-console.log('path:', route)
+console.log('route:', result.route)
 ```
 
 ##`Snake` API
 
 ### .breadthFirst( `options` )
 
-Find a path from `start` to `end`, using a breadth-first search.
+Find a path from `start` to `end`, using a breadth-first search. Returns an object.
 
 ### .depthFirst( `options` )
 
-Find a path from `start` to `end`, using a depth-first search.
+Find a path from `start` to `end`, using a depth-first search. Returns an object.
 
 ### .alternate( `options` )
 
-Find a path from `start` to `end`, using an alternate search heuristic.
+Find a path from `start` to `end`, using an alternate search heuristic. Returns an object.
 
 ###options
 
@@ -75,6 +75,40 @@ Find a path from `start` to `end`, using an alternate search heuristic.
 * `end`:      [x,y] coordinates
 
 Note: for the coordinates, [0,0] is bottom left point in `maze` (cartesian coordinate system)
+
+###output
+
+Each of the 3 API methods return an object that looks like this:
+
+```javascript
+{ msg: 'found exit',
+  status: 1,        //  1 = success, 0 = impossible to solve for given start & end points
+  elapsed: 1,       //  total time required to run the search (milliseconds)
+  numVisited: 268,  //  # of points searched in the maze to find a route
+  route:          
+   [ [ '2', '11' ],
+     [ '2', '12' ],
+     [ '2', '13' ],
+     [ '2', '14' ],
+     [ '2', '15' ],
+     [ '2', '16' ],
+     [ '3', '16' ],
+     [ '4', '16' ],
+     [ '5', '16' ],
+     [ '6', '16' ],
+     [ '7', '16' ],
+     [ '7', '17' ],
+     [ '7', '18' ],
+     [ '7', '19' ],
+     [ '6', '19' ],
+     [ '5', '19' ],
+     [ '4', '19' ],
+     [ '3', '19' ],
+     [ '2', '19' ],
+     [ '2', '20' ],
+     [ 2, 21 ] ],
+  cost: 21 }        //  the cost for the discovered route (assumes all movements have cost = `1`)
+```
 
 
 ## License 
