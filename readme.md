@@ -56,15 +56,15 @@ console.log('path:', route)
 
 ##`Snake` API
 
-### .breadthFirst(options)
+### .breadthFirst(`options`)
 
 Find a path from `start` to `end`, using a breadth-first search.
 
-### .depthFirst(options)
+### .depthFirst(`options`)
 
 Find a path from `start` to `end`, using a depth-first search.
 
-### .alternate(options)
+### .alternate(`options`)
 
 Find a path from `start` to `end`, using an alternate search heuristic.
 
@@ -73,5 +73,7 @@ Find a path from `start` to `end`, using an alternate search heuristic.
 `options` is an object with the following keys:
 
 * `maze`:     a 2D Array in which each value is `0` or `1`
-* `start`:    [x,y] coordinates - [0,0] is bottom left point
+* `start`:    [x,y] coordinates
 * `end`:      [x,y] coordinates
+
+Note: for the coordinates, [0,0] is bottom left point in `maze` (cartesian coordinate system)
