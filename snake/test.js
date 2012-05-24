@@ -1,4 +1,5 @@
-var Snake = require('./snake')
+var assert = require('assert')
+  , Snake = require('./snake')
 
 var maze = [
   [0,0,0,0,1,1,0,0,0,0,0,0.0,0,0,0,0,1,1,0,0,0,0,0,0]
@@ -30,16 +31,19 @@ var maze = [
 
 var snake = new Snake()
 
-var opts = { maze: maze, start: [2,11], end: [23,19] }
+var cases = [
+  { opts: { maze: maze, start: [2,11], end: [23,19] }, method: 'breadthFirst' }
+, { opts: { maze: maze, start: [2,11], end: [2,21] }, method: 'breadthFirst' }
+, { opts: { maze: maze, start: [2,11], end: [23,19] }, method: 'depthFirst' }
+, { opts: { maze: maze, start: [2,11], end: [2,21] }, method: 'depthFirst' }
+]
 
-// var breadthFirst = snake.breadthFirst(opts)
-// console.log('breadth-first path:', breadthFirst.join(' -> '))
-
-//var opts = { maze: maze, start: [2,11], end: [2,21] }
-
-// var breadthFirst = snake.breadthFirst(opts)
-// console.log('breadth-first path:', breadthFirst.join(' -> '))
-
-var depthFirst = snake.depthFirst(opts)
-console.log('\ndepth-first path:', depthFirst.join(' -> '))
+cases.forEach(function (test) {
+  var result = snake[test.method](test.opts)
+  assert.strictEqual(result.msg, 'found exit', 'expected message to be `found exit`')
+  assert.strictEqual(result.status, 1, 'expected status too be 1')
+  assert(Array.isArray(result.route), 'expected route to be array')
+  console.log(test.method, 'output:\n', result.route.join(' -> '), '\n')
+})
+console.log('\n\nALL TESTS PASS :)\n-------------------')
 
