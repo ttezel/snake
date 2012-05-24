@@ -30,10 +30,16 @@ var maze = [
 
 var snake = new Snake()
 
-var route = snake.breadthFirst({
-  maze: maze
-, start: [2,11]
-, end: [23,19]
-})
+var opts = { maze: maze, start: [2,11], end: [23,19] }
 
-console.log('breadth-first path:', route.join(' -> '))
+// var breadthFirst = snake.breadthFirst(opts)
+// console.log('breadth-first path:', breadthFirst.join(' -> '))
+
+//var opts = { maze: maze, start: [2,11], end: [2,21] }
+
+// var breadthFirst = snake.breadthFirst(opts)
+// console.log('breadth-first path:', breadthFirst.join(' -> '))
+
+var depthFirst = snake.depthFirst(opts)
+console.log('\ndepth-first path:', depthFirst.join(' -> '))
+
