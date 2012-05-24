@@ -47,7 +47,8 @@ cases.forEach(function (test, index) {
   assert(Array.isArray(result.route), 'expected route to be array')
   console.log(
     '\nTest #%s: `%s` search. start: [%s]. end [%s]. route:\n\n%s\n'
-  , index+1, test.method, test.opts.start, test.opts.end, result.route.join(' -> '))
+  , index+1, test.method, test.opts.start, test.opts.end, result.route.join(' -> ')
+  )
 })
 console.log('\n\nALL TESTS PASS :)\n-------------------')
 
