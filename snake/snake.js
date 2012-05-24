@@ -108,11 +108,6 @@ Snake.prototype.depthFirst = function (opts) {
   //mark start as visited
   visited[start[0]] = [start[1]]
 
-  //store node:parent relationships to reconstruct the path
-  var routes = {}
-
-  routes[start.toString()] = null
-
   //nodes that have yet to be fully explored
   var stack = [start]
 
@@ -124,22 +119,12 @@ Snake.prototype.depthFirst = function (opts) {
   
     //are we done?
     if (top[0] === end[0] && top[1] === end[1]) {
-      var parent = routes[top.toString()]
-        , cost = 1
-        , out = [top]
-
-      //reconstruct the shortest path going backwards
-      while (parent) {
-        out.push(parent.split(','))
-        cost++
-        parent = routes[parent]
-      }
-      out.reverse()
 
       var elapsed = Date.now() - t1
         , msg = 'found exit'
+        , cost = stack.length
       this.stdout(msg, numVisited, elapsed, cost)
-      return out 
+      return stack
     }
 
     //not done, push first unvisited child onto stack
@@ -149,34 +134,31 @@ Snake.prototype.depthFirst = function (opts) {
     //find the first unvisited child
     var found = children.some(function (child) {
       var x = child[0], y = child[1]
-      //add unvisited children to stack
-      if(!visited[x] || visited[x].indexOf(y) === -1) {
-        //mark child as visited
-        if (!visited[x]) visited[x] = [y]
-        else visited[x].push(y)
-        //update routes
-        routes[child.toString()] = top.toString()
-        //push child onto stack
-        stack.push(child)
-        numVisited++
-        return true
-      }
-    })
+      //mark child as visited
+      if (!visited[x]) visited[x] = [y]
+      else if (visited[x].indexOf(y) === -1) visited[x].push(y)
+      else return false
 
+      //push child onto stack
+      stack.push(child)
+      numVisited++
+      return true
+    })
     //nowhere to go from this node, so pop it of the stack
     if (!found) stack.pop()
   }
 
-
+  var elapsed = Date.now() - t1
+    , msg = 'maze is impossible to solve for start and end positions specified'
+  this.stdout(msg, numVisited, elapsed)
   return []
-
-
 }
 
 Snake.prototype.stdout = function (msg, numVisited, elapsed, cost) {
   console.log('\n' + msg)
   console.log('\n# visited nodes:', numVisited)
   console.log('\ntotal time taken: %s ms\n', elapsed)
+  if (cost) console.log('\ncost of path:', cost)
 }
 
 Snake.prototype.checkOpts = function (opts) {
