@@ -29,7 +29,9 @@ Snake.prototype.isEmpty = function (point) {
 Snake.prototype.breadthFirst = function (opts) {
   var t1 = Date.now()
   this.checkOpts(opts)
-  var start = opts.start, end = opts.end
+
+  var start = opts.start
+    , end = opts.end
 
   var visited = []
     , numVisited = 1
@@ -54,26 +56,30 @@ Snake.prototype.breadthFirst = function (opts) {
     if (curr[0] === end[0] && curr[1] === end[1]) {
       var parent = routes[curr.toString()]
         , cost = 1
-        , out = [curr]
+        , route = [curr]
 
       //reconstruct the shortest path going backwards
       while (parent) {
-        out.push(parent.split(','))
+        route.push(parent.split(','))
         cost++
         parent = routes[parent]
       }
-      out.reverse()
+      route.reverse()
 
       var elapsed = Date.now() - t1
-        , msg = 'found exit'
-      this.stdout(msg, numVisited, elapsed, cost)
-      return out
+
+      return {
+        msg: 'found exit'
+      , elapsed: elapsed
+      , numVisited: numVisited
+      , route: route
+      , cost: cost
+      }
     }
 
     //not done, visit child nodes
     var children = this.getChildren(curr)
 
-    //add un-visited children to queue
     children.forEach(function (child) {
       var x = child[0], y = child[1]
 
@@ -90,9 +96,14 @@ Snake.prototype.breadthFirst = function (opts) {
   }
 
   var elapsed = Date.now() - t1
-    , msg = 'maze is impossible to solve for start and end positions specified'
-  this.stdout(msg, numVisited, elapsed)
-  return []
+
+  return {
+    msg: 'maze is impossible to solve for start and end positions specified'
+  , elapsed: elapsed
+  , numVisited: numVisited
+  , route: []
+  , cost: null  
+  }
 }
 
 Snake.prototype.depthFirst = function (opts) {
@@ -114,17 +125,20 @@ Snake.prototype.depthFirst = function (opts) {
   //traverse
   while (stack.length) {
     var top = stack[stack.length-1]
-
     console.log('.')
   
     //are we done?
     if (top[0] === end[0] && top[1] === end[1]) {
 
       var elapsed = Date.now() - t1
-        , msg = 'found exit'
-        , cost = stack.length
-      this.stdout(msg, numVisited, elapsed, cost)
-      return stack
+
+      return {
+        msg: 'found exit'
+      , elapsed: elapsed
+      , numVisited: numVisited
+      , cost: stack.length
+      , route: stack
+      }
     }
 
     //not done, push first unvisited child onto stack
@@ -144,21 +158,20 @@ Snake.prototype.depthFirst = function (opts) {
       numVisited++
       return true
     })
+    
     //nowhere to go from this node, so pop it of the stack
     if (!hasChildren) stack.pop()
   }
 
   var elapsed = Date.now() - t1
-    , msg = 'maze is impossible to solve for start and end positions specified'
-  this.stdout(msg, numVisited, elapsed)
-  return []
-}
 
-Snake.prototype.stdout = function (msg, numVisited, elapsed, cost) {
-  console.log('\n' + msg)
-  console.log('\n# visited nodes:', numVisited)
-  console.log('\ntotal time taken: %s ms\n', elapsed)
-  if (cost) console.log('\ncost of path:', cost)
+  return {
+    msg: 'maze is impossible to solve for start and end positions specified'
+  , elapsed: elapsed
+  , numVisited: numVisited
+  , route: []
+  , cost: null
+  }
 }
 
 Snake.prototype.checkOpts = function (opts) {
