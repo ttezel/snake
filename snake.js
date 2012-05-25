@@ -180,6 +180,118 @@ Snake.prototype.depthFirst = function (opts) {
   }
 }
 
+Snake.prototype.alternate = function (opts) {
+  var t1 = Date.now()
+    , self = this
+
+  this.checkOpts(opts)
+
+  var start = opts.start
+    , end = opts.end
+
+  var visited = []
+    , numVisited = 0
+
+  //mark start as visited
+  visited[start[0]] = [start[1]]
+
+  //nodes that have yet to be fully explored
+  var stack = [start]
+
+  while (stack.length) {
+    console.log('.')
+    console.log('numvisited', numVisited)
+
+    var top = stack[stack.length-1]
+
+    console.log('top', top)
+
+    //are we done?
+    if (top[0] === end[0] && top[1] === end[1]) {
+      console.log('DONE!!!')
+      return stack
+    }
+
+    //not done, push the child closest to the guide line onto stack
+    var min = Number.MAX_VALUE
+      , chosen
+
+    var children = this.getChildren(top)
+
+    //find child with least cartesian distance to guide
+
+    
+    children.forEach(function (child) {
+      var x = child[0], y = child[1]
+
+      console.log('child', child)
+
+      //if unvisited mark as visited
+      if (!visited[x]) 
+        visited[x] = [y]
+      else if (visited[x].indexOf(y) === -1) 
+        visited[x].push(y)
+      else {
+        return;//already visited, do nothing
+      }
+        
+
+      var dist = self.getGuideDistance(child)
+      console.log('distance', dist)
+      if (dist < min) {
+        min = dist
+        chosen = child
+      }
+    })
+
+    console.log('chosen', chosen)
+
+    //nowhere to go from here, pop off the stack
+    if (!chosen) {
+      stack.pop()
+      continue
+    }
+
+    stack.push(chosen)
+    numVisited++
+  }
+
+
+  return []
+}
+
+Snake.prototype.getGuideDistance = function (point) {
+  var start = this.opts.start
+    , end = this.opts.end
+
+    console.log('guide distance')
+
+  var x0 = start[0]
+    , y0 = start[1]
+
+  var x1 = end[0]
+    , y1 = end[1]
+
+  var px = point[0]
+    , py = point[1]
+
+  var dx = x1-x0
+    , dy = y1-y0
+
+  var u = ((px-x0)*dx + (py-y0)*dy)
+
+  if (u > 1) u = 1
+  else if (u < 0) u = 0
+
+  var x = x0 + u*dx
+    , y = y0 + u*dy
+
+  var distX = x-px
+    , distY = x-py
+
+  return Math.sqrt(distX*distX + distY*distY)
+}
+
 Snake.prototype.checkOpts = function (opts) {
   var maze = opts.maze, start = opts.start, end = opts.end
   if (!maze)

@@ -32,12 +32,16 @@ var maze = [
 var snake = new Snake()
 
 var cases = [
-  { opts: { maze: maze, start: [2,11], end: [23,19] }, method: 'breadthFirst' }
-, { opts: { maze: maze, start: [2,11], end: [2,21] }, method: 'breadthFirst' }
-, { opts: { maze: maze, start: [0,0], end: [24,24] }, method: 'breadthFirst' }
-, { opts: { maze: maze, start: [2,11], end: [23,19] }, method: 'depthFirst' }
-, { opts: { maze: maze, start: [2,11], end: [2,21] }, method: 'depthFirst' }
-, { opts: { maze: maze, start: [0,0], end: [24,24] }, method: 'depthFirst' }
+//   { opts: { maze: maze, start: [2,11], end: [23,19] }, method: 'breadthFirst' }
+// , { opts: { maze: maze, start: [2,11], end: [2,21] }, method: 'breadthFirst' }
+// , { opts: { maze: maze, start: [0,0], end: [24,24] }, method: 'breadthFirst' }
+// , { opts: { maze: maze, start: [2,11], end: [23,19] }, method: 'depthFirst' }
+// , { opts: { maze: maze, start: [2,11], end: [2,21] }, method: 'depthFirst' }
+// , { opts: { maze: maze, start: [0,0], end: [24,24] }, method: 'depthFirst' }
+
+{ opts: { maze: maze, start: [2,11], end: [23,19] }, method: 'alternate' }
+// , { opts: { maze: maze, start: [2,11], end: [2,21] }, method: 'alternate' }
+// , { opts: { maze: maze, start: [0,0], end: [24,24] }, method: 'alternate' }
 ]
 
 cases.forEach(function (test, index) {
