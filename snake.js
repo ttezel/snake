@@ -6,16 +6,12 @@ Snake.prototype.solve = function (opts) {
   switch (opts.heuristic) {
     case 'breadthFirst':
       return this.breadthFirst(opts)
-      break
     case 'depthFirst':
       return this.depthFirst(opts)
-      break
     case 'manhattan':
       return this.alternate(opts, 'manhattan')
-      break
     case 'linear':
       return this.alternate(opts, 'linear')
-      break
     default:
       throw new Error('heuristic '+opts.heuristic+' is not supported.')
   }
@@ -199,6 +195,11 @@ Snake.prototype.depthFirst = function (opts) {
   }
 }
 
+//use a @heuristic to bias the choice of next child to explore
+//
+//at each point in the maze, the next node to be explored is the child with the minimum
+//cost, where cost is calculated according to @heuristic. If multiple children have the
+//same minimum cost, the first one found will be traversed.
 Snake.prototype.alternate = function (opts, heuristic) {
   var t1 = Date.now()
     , self = this
@@ -299,26 +300,6 @@ Snake.prototype.getCost = function (point, heuristic) {
 
   var px = point[0]
     , py = point[1]
-
-
-  
-
-
-  // var dx = ex-sx
-  //   , dy = ey-sy
-
-  // var u = ((px-sx)*dx + (py-sy)*dy)
-
-  // if (u > 1) u = 1
-  // else if (u < 0) u = 0
-
-  // var x = sx + u*dx
-  //   , y = sy + u*dy
-
-  // var distX = x-px
-  //   , distY = x-py
-
-  // var D = Math.sqrt(distX*distX + distY*distY)
 
   switch (heuristic) {
     case 'manhattan':
