@@ -115,7 +115,7 @@ Note: for the coordinates, [0,0] is bottom left point in `maze` (cartesian coord
 
 ###.paint(`result`)
 
-Draws a pretty maze in your terminal (similar to the image at the top). Pass in the result object
+Draws a pretty maze in your terminal (similar to [this](https://github.com/ttezel/snake#snake)). Pass in the result object
 that you get back from `.solve()`, and it'll render the snake's path in your terminal.
 
 ## License 
