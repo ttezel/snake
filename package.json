@@ -1,0 +1,20 @@
+{
+    "name": "snake"
+  , "description": "2D Maze solver"
+  , "version": "0.0.1"
+  , "author": "Tolga Tezel"
+  , "keywords": ["maze"]
+  , "dependencies": { "term-canvas": ">=0.0.4" }
+  , "devDependencies": {
+
+  }
+  , "engines": { "node": ">=0.6.0" }
+  , "main": "./snake"
+  , "repository": {
+        "type": "git"
+      , "url": "http://github.com/ttezel/snake.git"
+    }
+  , "scripts": {
+    
+    }
+}
