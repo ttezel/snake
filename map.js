@@ -44,7 +44,7 @@ Map.prototype.render = function () {
   var start = this.test.opts.start
     , end = this.test.opts.end
 
-  this.drawRect(start[0],start[1],'red')
+  this.drawRect(start[0],start[1],'green')
   this.drawRect(end[0],end[1],'red')
 
   this.ctx.resetState()
@@ -60,5 +60,5 @@ Map.prototype.clear = function () {
 Map.prototype.drawRect = function (x,y,color) {
   y = this.test.opts.maze.length - y
   this.ctx.fillStyle = color
-  this.ctx.fillRect(2*x,y,2,1)
+  this.ctx.fillRect(2*x+5,y,2,1)
 }
