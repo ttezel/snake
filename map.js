@@ -1,17 +1,15 @@
-var Snake = require('./snake')
-
 var Canvas = require('term-canvas')
 
 module.exports = Map
 
-function Map (test, result) {
-  this.test = test
+function Map (snake, result) {
+  this.snake = snake
   this.result = result
 }
 
 Map.prototype.render = function () {
   //draw maze in terminal
-  var maze = this.test.opts.maze
+  var maze = this.snake.opts.maze
 
   var mHeight = maze.length
     , mWidth = maze[0].length
@@ -19,13 +17,11 @@ Map.prototype.render = function () {
   this.canvas = new Canvas(mHeight + 5, mWidth + 5)
   this.ctx = this.canvas.getContext('2d')
 
-  var tempSnake = new Snake({ maze : maze })
-
   this.clear()
 
   for (numRows = maze.length, i = numRows-1; i > -1; i--) {
     for (var j = 0, numCols = maze[0].length; j < numCols; j++) {
-      if (!tempSnake.isEmpty([j,i])) {
+      if (!this.snake.isEmpty([j,i])) {
         this.drawRect(j,i,'black')
       } else {
         var inRoute = this.result.route.some(function (coords) {
@@ -41,8 +37,8 @@ Map.prototype.render = function () {
   }
 
   // //draw start and end points on maze
-  var start = this.test.opts.start
-    , end = this.test.opts.end
+  var start = this.snake.opts.start
+    , end = this.snake.opts.end
 
   this.drawRect(start[0],start[1],'green')
   this.drawRect(end[0],end[1],'red')
@@ -52,13 +48,13 @@ Map.prototype.render = function () {
 }
 
 Map.prototype.clear = function () {
-  var h = this.test.opts.maze.length+3
+  var h = this.snake.opts.maze.length+3
   var i = -1
   while (++i < h) process.stdout.write('\n')
 }
 
 Map.prototype.drawRect = function (x,y,color) {
-  y = this.test.opts.maze.length - y
+  y = this.snake.opts.maze.length - y
   this.ctx.fillStyle = color
   this.ctx.fillRect(2*x+5,y,2,1)
 }
