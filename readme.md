@@ -8,7 +8,7 @@ Each position in the maze can be either empty or blocked (marked by a `0` or `1`
 `snake` can only move up, down, left or right, but not diagonally. It cannot enter
 blocked positions.
 
-[route](http://dl.dropbox.com/u/32773572/snake-output.png)
+![route](http://dl.dropbox.com/u/32773572/snake-output.png)
 
 ##Usage
 
