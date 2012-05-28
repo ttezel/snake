@@ -2,7 +2,7 @@ var Map = require('./map')
 
 module.exports = Snake
 
-function Snake (opts) {}
+function Snake () {}
 
 Snake.prototype.solve = function (opts) {
   switch (opts.heuristic) {
@@ -40,7 +40,7 @@ Snake.prototype.getChildren = function (point) {
 Snake.prototype.isEmpty = function (point) {
   var x = point[0]
     , y = point[1]
-    , maxY = this._maxY || this.opts.maze.length-1
+    , maxY = this._maxY
 
   if (y > -1 && this.opts.maze[maxY-y] && this.opts.maze[maxY-y][x] === 0) 
     return true
@@ -201,7 +201,7 @@ Snake.prototype.depthFirst = function (opts) {
 //
 //at each point in the maze, the next node to be explored is the child with the minimum
 //cost, where cost is calculated according to @heuristic. If multiple children have the
-//same minimum cost, the first one found will be traversed.
+//same minimum cost, the chosen one will be selected at random.
 Snake.prototype.alternate = function (opts, heuristic) {
   var t1 = Date.now()
     , self = this
@@ -239,7 +239,7 @@ Snake.prototype.alternate = function (opts, heuristic) {
 
     //not done, push the child with least cost onto stack
     var min = Number.MAX_VALUE
-      , chosen = null
+      , cheapest = []
 
     var children = this.getChildren(top)
 
@@ -251,20 +251,25 @@ Snake.prototype.alternate = function (opts, heuristic) {
       if (visited[x] && visited[x].indexOf(y) !== -1) return
 
       var cost = self.getCost(child, heuristic)
-      //console.log('distance', dist)
+
       if (cost < min) {
         min = cost
-        chosen = child
+        cheapest = [child]
+      } else if (cost === min) {
+        cheapest.push(child)
       }
     })
 
     //nowhere to go from here, pop off the stack
-    if (!chosen) {
+    if (!cheapest.length) {
       stack.pop()
       continue
     }
 
-    //we have a new node to visit, push on stack
+    //choose a random one of the cheapest children, push on stack
+    var index = Math.floor(Math.random()*cheapest.length)
+      , chosen = cheapest[index]
+
     stack.push(chosen)
 
     var cx = chosen[0]
