@@ -57,7 +57,6 @@ cases.forEach(function (test, index) {
     '\nTest#%s: %s. start: [%s] end [%s]. elapsed: %s ms. route (cost %s):\n\n%s\n'
   , index+1, opts.heuristic, opts.start, opts.end, result.elapsed, result.cost, result.route.join(' -> ')
   )
-
-  var map = new Map(test, result).render()
+  snake.paint(result)
 })
 console.log('\n\nALL TESTS PASS :)\n-------------------')
