@@ -1,6 +1,8 @@
+var Map = require('./map')
+
 module.exports = Snake
 
-function Snake (opts) { this.opts = opts }
+function Snake (opts) {}
 
 Snake.prototype.solve = function (opts) {
   switch (opts.heuristic) {
@@ -322,4 +324,9 @@ Snake.prototype.checkOpts = function (opts) {
   this.opts = opts
   if (!this.isEmpty(start)) throw new Error('must specify valid start position. Got: ' + start)
   if (!this.isEmpty(end)) throw new Error('must specify valid end position. Got: ' + end)
+}
+
+Snake.prototype.paint = function (result) {
+  var map = new Map(this, result).render()
+  return this
 }
