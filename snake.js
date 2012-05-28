@@ -2,6 +2,25 @@ module.exports = Snake
 
 function Snake (opts) { this.opts = opts }
 
+Snake.prototype.solve = function (opts) {
+  switch (opts.heuristic) {
+    case 'breadthFirst':
+      return this.breadthFirst(opts)
+      break
+    case 'depthFirst':
+      return this.depthFirst(opts)
+      break
+    case 'manhattan':
+      return this.alternate(opts, 'manhattan')
+      break
+    case 'linear':
+      return this.alternate(opts, 'linear')
+      break
+    default:
+      throw new Error('heuristic '+opts.heuristic+' is not supported.')
+  }
+}
+
 //get possible moves from @point
 Snake.prototype.getChildren = function (point) {
   var self = this
@@ -180,7 +199,7 @@ Snake.prototype.depthFirst = function (opts) {
   }
 }
 
-Snake.prototype.alternate = function (opts) {
+Snake.prototype.alternate = function (opts, heuristic) {
   var t1 = Date.now()
     , self = this
 
@@ -199,16 +218,10 @@ Snake.prototype.alternate = function (opts) {
   var stack = [start]
 
   while (stack.length) {
-    //console.log('numvisited', numVisited)
-
     var top = stack[stack.length-1]
-
-    //console.log('top', top)
 
     //are we done?
     if (top[0] === end[0] && top[1] === end[1]) {
-      console.log('DONE!!!')
-
       var elapsed = Date.now() - t1
 
       return {
@@ -221,28 +234,26 @@ Snake.prototype.alternate = function (opts) {
       }
     }
 
-    //not done, push the child closest to the guide line onto stack
+    //not done, push the child with least cost onto stack
     var min = Number.MAX_VALUE
       , chosen = null
 
     var children = this.getChildren(top)
 
-    //find child with least cartesian distance to guide
+    //find child with least cost
 
     children.forEach(function (child) {
       var x = child[0], y = child[1]
 
       if (visited[x] && visited[x].indexOf(y) !== -1) return
 
-      var dist = self.getGuideDistance(child)
+      var cost = self.getCost(child, heuristic)
       //console.log('distance', dist)
-      if (dist < min) {
-        min = dist
+      if (cost < min) {
+        min = cost
         chosen = child
       }
     })
-
-    //console.log('chosen', chosen)
 
     //nowhere to go from here, pop off the stack
     if (!chosen) {
@@ -250,7 +261,7 @@ Snake.prototype.alternate = function (opts) {
       continue
     }
 
-    //we have a new node to visit, push on stack and mark visited
+    //we have a new node to visit, push on stack
     stack.push(chosen)
 
     var cx = chosen[0]
@@ -276,34 +287,47 @@ Snake.prototype.alternate = function (opts) {
   }
 }
 
-Snake.prototype.getGuideDistance = function (point) {
+Snake.prototype.getCost = function (point, heuristic) {
   var start = this.opts.start
     , end = this.opts.end
 
-  var x0 = start[0]
-    , y0 = start[1]
+  var sx = start[0]
+    , sy = start[1]
 
-  var x1 = end[0]
-    , y1 = end[1]
+  var ex = end[0]
+    , ey = end[1]
 
   var px = point[0]
     , py = point[1]
 
-  var dx = x1-x0
-    , dy = y1-y0
 
-  var u = ((px-x0)*dx + (py-y0)*dy)
+  
 
-  if (u > 1) u = 1
-  else if (u < 0) u = 0
 
-  var x = x0 + u*dx
-    , y = y0 + u*dy
+  // var dx = ex-sx
+  //   , dy = ey-sy
 
-  var distX = x-px
-    , distY = x-py
+  // var u = ((px-sx)*dx + (py-sy)*dy)
 
-  return Math.sqrt(distX*distX + distY*distY)
+  // if (u > 1) u = 1
+  // else if (u < 0) u = 0
+
+  // var x = sx + u*dx
+  //   , y = sy + u*dy
+
+  // var distX = x-px
+  //   , distY = x-py
+
+  // var D = Math.sqrt(distX*distX + distY*distY)
+
+  switch (heuristic) {
+    case 'manhattan':
+      return 1*(Math.abs(px-ex) + Math.abs(py-ey))
+    case 'linear':
+      return Math.sqrt(Math.pow(px-ex,2) + Math.pow(py-ey,2))
+    default:
+     throw new Error('heuristic '+heuristic+' is not supported.')
+  }
 }
 
 Snake.prototype.checkOpts = function (opts) {
