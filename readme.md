@@ -43,10 +43,11 @@ var maze = [
 
 var snake = new Snake()
 
-var result = snake.breadthFirst({
+var result = snake.solve({
   maze: maze
 , start: [2,11]
 , end: [23,19]
+, heuristic: 'breadthFirst'
 })
 
 console.log('route:', result.route)
@@ -54,20 +55,9 @@ console.log('route:', result.route)
 
 ##`Snake` API
 
-### .breadthFirst( `options` )
+### .solve( `options` )
 
-Find a path from `start` to `end`, using a breadth-first search. Returns an object.
-
-### .depthFirst( `options` )
-
-Find a path from `start` to `end`, using a depth-first search. Returns an object.
-
-### .alternate( `options` )
-
-Find a path from `start` to `end`, using an alternate search heuristic. Returns an object.
-
-The alternate search uses a distance estimate to determine where to search next. Consider a straight line **L** drawn on the maze, connecting `start` and `end`. At any given time in the search, `snake` will next choose to explore an adjacent point with the lowest cartesian distance away from **L**.
-
+Find a route from `start` to `end`, using the `heuristic` to guide the search. Returns an object.
 
 ###options
 
@@ -76,12 +66,19 @@ The alternate search uses a distance estimate to determine where to search next.
 * `maze`:     a 2D Array in which each value is `0` or `1`
 * `start`:    [x,y] coordinates
 * `end`:      [x,y] coordinates
+* `heuristic`: search heuristic to use when exploring the maze
+
+Supported search heuristics are:
+  * `breadthFirst` : Uses a breadth-first search.
+  * `depthFirst` : Uses a depth-first search.
+  * `linear` : Explores by minimizing the cartesian distance from the `end` point.
+  * `manhattan` : Explores by minimizing the manhattan distance from the `end` point.
 
 Note: for the coordinates, [0,0] is bottom left point in `maze` (cartesian coordinate system)
 
 ###output
 
-Each of the 3 API methods return an object that looks like this:
+`Snake.solve()` returns an object that looks like this:
 
 ```javascript
 { msg: 'found exit',
