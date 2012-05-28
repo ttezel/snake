@@ -48,7 +48,7 @@ Map.prototype.render = function () {
 }
 
 Map.prototype.clear = function () {
-  var h = this.snake.opts.maze.length+3
+  var h = this.snake.opts.maze.length+5
   var i = -1
   while (++i < h) process.stdout.write('\n')
 }
