@@ -69,6 +69,8 @@ Find a route from `start` to `end`, using the `heuristic` to guide the search. R
 * `end`:      [x,y] coordinates
 * `heuristic`: search heuristic to use when exploring the maze
 
+Note: for the coordinates, [0,0] is bottom left point in `maze` (cartesian coordinate system)
+
 ####`heuristic`
 
 Supported search heuristics are:
@@ -76,8 +78,6 @@ Supported search heuristics are:
   * `depthFirst` : Uses a depth-first search.
   * `linear` : Explores by minimizing the cartesian distance from the `end` point.
   * `manhattan` : Explores by minimizing the manhattan distance from the `end` point.
-
-Note: for the coordinates, [0,0] is bottom left point in `maze` (cartesian coordinate system)
 
 ####output
 
@@ -115,7 +115,7 @@ Note: for the coordinates, [0,0] is bottom left point in `maze` (cartesian coord
 
 ###.paint(`result`)
 
-Draws a pretty maze in your terminal (similar to [this](https://github.com/ttezel/snake#snake)). Pass in the result object
+Draws a pretty maze in your terminal (similar to [this](https://github.com/ttezel/snake#snake)). Pass in the `result` object
 that you get back from `.solve()`, and it'll render the snake's path in your terminal.
 
 ## License 
