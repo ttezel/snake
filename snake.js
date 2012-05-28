@@ -1,6 +1,6 @@
 module.exports = Snake
 
-function Snake () {}
+function Snake (opts) { this.opts = opts }
 
 //get possible moves from @point
 Snake.prototype.getChildren = function (point) {
@@ -23,7 +23,7 @@ Snake.prototype.getChildren = function (point) {
 Snake.prototype.isEmpty = function (point) {
   var x = point[0]
     , y = point[1]
-    , maxY = this._maxY
+    , maxY = this._maxY || this.opts.maze.length-1
 
   if (y > -1 && this.opts.maze[maxY-y] && this.opts.maze[maxY-y][x] === 0) 
     return true
@@ -199,52 +199,50 @@ Snake.prototype.alternate = function (opts) {
   var stack = [start]
 
   while (stack.length) {
-    console.log('.')
-    console.log('numvisited', numVisited)
+    //console.log('numvisited', numVisited)
 
     var top = stack[stack.length-1]
 
-    console.log('top', top)
+    //console.log('top', top)
 
     //are we done?
     if (top[0] === end[0] && top[1] === end[1]) {
       console.log('DONE!!!')
-      return stack
+
+      var elapsed = Date.now() - t1
+
+      return {
+        msg: 'found exit'
+      , status: 1
+      , elapsed: elapsed
+      , numVisited: numVisited
+      , cost: stack.length
+      , route: stack
+      }
     }
 
     //not done, push the child closest to the guide line onto stack
     var min = Number.MAX_VALUE
-      , chosen
+      , chosen = null
 
     var children = this.getChildren(top)
 
     //find child with least cartesian distance to guide
 
-    
     children.forEach(function (child) {
       var x = child[0], y = child[1]
 
-      console.log('child', child)
-
-      //if unvisited mark as visited
-      if (!visited[x]) 
-        visited[x] = [y]
-      else if (visited[x].indexOf(y) === -1) 
-        visited[x].push(y)
-      else {
-        return;//already visited, do nothing
-      }
-        
+      if (visited[x] && visited[x].indexOf(y) !== -1) return
 
       var dist = self.getGuideDistance(child)
-      console.log('distance', dist)
+      //console.log('distance', dist)
       if (dist < min) {
         min = dist
         chosen = child
       }
     })
 
-    console.log('chosen', chosen)
+    //console.log('chosen', chosen)
 
     //nowhere to go from here, pop off the stack
     if (!chosen) {
@@ -252,19 +250,35 @@ Snake.prototype.alternate = function (opts) {
       continue
     }
 
+    //we have a new node to visit, push on stack and mark visited
     stack.push(chosen)
+
+    var cx = chosen[0]
+      , cy = chosen[1]
+
+    //mark as visited
+    if (!visited[cx]) visited[cx] = [cy]
+    else if (visited[cx].indexOf(cy) === -1) visited[cx].push(cy)
+
     numVisited++
   }
 
+  //failure scenario
+  var elapsed = Date.now() - t1
 
-  return []
+  return {
+    msg: 'maze is impossible to solve for start and end positions specified'
+  , status: 0
+  , elapsed: elapsed
+  , numVisited: numVisited
+  , route: []
+  , cost: null
+  }
 }
 
 Snake.prototype.getGuideDistance = function (point) {
   var start = this.opts.start
     , end = this.opts.end
-
-    console.log('guide distance')
 
   var x0 = start[0]
     , y0 = start[1]
