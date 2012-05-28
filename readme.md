@@ -60,7 +60,7 @@ console.log('route:', result.route)
 
 Find a route from `start` to `end`, using the `heuristic` to guide the search. Returns an object.
 
-###options
+####options
 
 `options` is an object with the following keys:
 
@@ -69,6 +69,7 @@ Find a route from `start` to `end`, using the `heuristic` to guide the search. R
 * `end`:      [x,y] coordinates
 * `heuristic`: search heuristic to use when exploring the maze
 
+####`heuristic`
 
 Supported search heuristics are:
   * `breadthFirst` : Uses a breadth-first search.
@@ -78,7 +79,7 @@ Supported search heuristics are:
 
 Note: for the coordinates, [0,0] is bottom left point in `maze` (cartesian coordinate system)
 
-###output
+####output
 
 `Snake.solve()` returns an object that looks like this:
 
@@ -112,6 +113,10 @@ Note: for the coordinates, [0,0] is bottom left point in `maze` (cartesian coord
   cost: 21 }        //  the cost for the discovered route (assumes all movements have cost = `1`)
 ```
 
+###.paint(`result`)
+
+Draws a pretty maze in your terminal (similar to the image at the top). Pass in the result object
+that you get back from `.solve()`, and it'll render the snake's path in your terminal.
 
 ## License 
 
