@@ -1,4 +1,3 @@
-
 ##`Snake`
 
 Given a 2D maze, `snake` solves the maze for a given `start` and `end` point in the maze.
@@ -69,6 +68,7 @@ Find a route from `start` to `end`, using the `heuristic` to guide the search. R
 * `start`:    [x,y] coordinates
 * `end`:      [x,y] coordinates
 * `heuristic`: search heuristic to use when exploring the maze
+
 
 Supported search heuristics are:
   * `breadthFirst` : Uses a breadth-first search.
