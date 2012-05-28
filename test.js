@@ -33,7 +33,7 @@ var maze = [
 var snake = new Snake()
 
 var cases = [
-   { opts: { maze: maze, start: [2,11], end: [23,19], heuristic: 'breadthFirst' } }
+  { opts: { maze: maze, start: [2,11], end: [23,19], heuristic: 'breadthFirst' } }
 , { opts: { maze: maze, start: [2,11], end: [2,21], heuristic: 'breadthFirst' } }
 , { opts: { maze: maze, start: [0,0], end: [24,24], heuristic: 'breadthFirst' } }
 , { opts: { maze: maze, start: [2,11], end: [23,19], heuristic: 'depthFirst' } }
