@@ -1,6 +1,5 @@
 var assert = require('assert')
   , Snake = require('./snake')
-  , Map = require('./map')
 
 var maze = [
   [0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0]
