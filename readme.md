@@ -60,7 +60,7 @@ var result = snake.solve({
 console.log('route:', result.route)
 
 //paint the maze in the terminal
-console.log('maze:', snake.paint(result))
+snake.paint(result)
 ```
 
 ##`Snake` API
