@@ -9,10 +9,16 @@ blocked positions.
 
 ![route](http://dl.dropbox.com/u/32773572/snake-output.png)
 
+##Install
+
+```
+  npm install snake
+```
+
 ##Usage
 
 ```javascript
-var Snake = require('./snake')
+var Snake = require('snake')
 
 var maze = [
   [0,0,0,0,1,1,0,0,0,0,0,0.0,0,0,0,0,1,1,0,0,0,0,0,0]
@@ -52,6 +58,9 @@ var result = snake.solve({
 })
 
 console.log('route:', result.route)
+
+//paint the maze in the terminal
+console.log('maze:', snake.paint(result))
 ```
 
 ##`Snake` API
